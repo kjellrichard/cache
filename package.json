@@ -2,8 +2,8 @@
   "name": "@ricb/cache",
   "version": "0.9.1",
   "description": "Effective and simple caching",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cache.js",
+  "types": "dist/cache.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "vitest"

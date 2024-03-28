@@ -1,0 +1,30 @@
+{
+  "name": "@ricb/cache",
+  "version": "0.9.0",
+  "description": "Effective and simple caching",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kjellrichard/cache.git"
+  },
+  "keywords": [
+    "cache"
+  ],
+  "author": "Richard B'",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kjellrichard/cache/issues"
+  },
+  "homepage": "https://github.com/kjellrichard/cache#readme",
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0"
+  }
+}

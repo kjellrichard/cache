@@ -3,6 +3,7 @@
   "version": "0.9.0",
   "description": "Effective and simple caching",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "vitest"
@@ -11,6 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/kjellrichard/cache.git"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "keywords": [
     "cache"
   ],

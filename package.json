@@ -1,6 +1,6 @@
 {
   "name": "@ricb/cache",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "Effective and simple caching",
   "main": "dist/cache.js",
   "types": "dist/cache.d.ts",

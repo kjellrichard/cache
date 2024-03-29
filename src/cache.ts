@@ -16,15 +16,15 @@ export function config(prefix?: string, cacheDir?: string): { prefix: string, ca
 }
 
 
-export function setCacheDir(dir: string) {
-    cacheDir = dir
+export function setCacheDir(dir: string): string {
+    return cacheDir = dir
 }
 
-export function setPrefix(p: string) {
-    prefix = p
+export function setPrefix(p: string): string {
+    return prefix = p
 }
 
-export function getConfig() {
+export function getConfig(): { prefix: string, cacheDir: string } {
     return { prefix, cacheDir }
 }
 

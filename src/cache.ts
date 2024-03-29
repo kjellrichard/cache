@@ -7,11 +7,12 @@ let prefix: string = process.env.CACHE_PREFIX ?? ''
 function getFilepath(key: string): string {
     return `${cacheDir}/${prefix}${key}.cache.json`
 }
-export function init(prefix?: string, cacheDir?: string) {
+export function config(prefix?: string, cacheDir?: string): { prefix: string, cacheDir: string } {
     if (prefix)
         setPrefix(prefix)
     if (cacheDir)
         setCacheDir(cacheDir)
+    return getConfig()
 }
 
 
@@ -23,10 +24,9 @@ export function setPrefix(p: string) {
     prefix = p
 }
 
-export function config() {
+export function getConfig() {
     return { prefix, cacheDir }
 }
-init()
 
 export type MaxAgeObject = {
     d?: number

@@ -4,7 +4,7 @@ A simple, efficient caching module for Node.js applications.
 
 It handles maxAge (aka ttl) and the storage location and file names can be configured
 
-See [MaxAgeParam](#maxageparam) and [Config](#config)
+See [MaxAge](#maxage) and [Config](#config)
 
 ## Installation
 
@@ -43,7 +43,7 @@ const result = await get(key, '10 ms');
 console.log(result); // Outputs: null
 ```
 
-## MaxAgeParam
+## MaxAge
 
 `MaxAgeParam` is a type that can be a `string`, `number`, or `MaxAgeObject`. It is used to specify the maximum age for a cache entry.
 
@@ -83,11 +83,11 @@ console.log(maxAgeMs3); // Outputs: 259200000
 
 ## Config
 
-The `cache` module allows you to configure the cache directory and prefix using the `init` function or `setCacheDir` and `setPrefix` functions.
+The `cache` module allows you to configure the cache directory and prefix using the `config` function or `setCacheDir` and `setPrefix` functions.
 
 ### init Function
 
-The `init` function is used to initialize the cache directory and prefix. It accepts two optional arguments:
+The `config` function is used to initialize the cache directory and prefix. It accepts two optional arguments:
 
 - `prefix`: The prefix to be used for the cache files.
 - `cacheDir`: The directory where the cache files will be stored.

@@ -87,8 +87,7 @@ export async function get<T>(key: string, maxAge?: MaxAgeParam): Promise<T | nul
         const s = await stat(filePath)
         if (!s.isFile())
             return null
-        if (!s.isFile())
-            return null
+
         const age = Date.now() - s.mtimeMs
         if (maxAge && age > maxAgeToMs(maxAge))
             return null
@@ -108,17 +107,19 @@ export async function put<T>(key: string, value: T): Promise<T> {
     return value
 }
 
-export async function withCache<T>(cacheKey: string, fetchFunction: () => Promise<T>, maxAge: MaxAgeParam, verbose?: boolean): Promise<T> {
+export async function withCache<T>(cacheKey: string, getter: Promise<T>, maxAge: MaxAgeParam): Promise<{ foundInCache: boolean, result: T, elapsed: number }> {
     const cached = await get<T>(cacheKey, maxAge);
+    const start = Date.now();
     if (cached) {
-        verbose && console.log(`Found data in cache for key: ${cacheKey}`);
-        return cached;
+        return { foundInCache: true, result: cached, elapsed: Date.now() - start };
     } else {
-        const freshData = await fetchFunction();
-        verbose && console.log(`Fetched fresh data for key: ${cacheKey}`);
+        const freshData = await getter;
         await put(cacheKey, freshData);
-        verbose && console.log(`Cached data for key: ${cacheKey}`);
-        return freshData;
+        return {
+            foundInCache: false,
+            result: freshData,
+            elapsed: Date.now() - start
+        }
     }
 }
 

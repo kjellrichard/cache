@@ -1,6 +1,6 @@
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
-import { put, get, del, has, setCacheDir, setPrefix } from '../src/cache'
+import { describe, it, expect, beforeAll, afterAll, expectTypeOf } from 'vitest'
+import { put, get, del, has, setCacheDir, setPrefix, withCache } from '../src/cache'
 import { unlink, readdir } from 'fs/promises'
 import { beforeEach } from 'node:test'
 
@@ -69,5 +69,20 @@ describe('Cache', () => {
         await new Promise(resolve => setTimeout(resolve, 11))
         const result = await get(key, '10 ms')
         expect(result).toBeNull()
+    })
+
+    it('should get value using withCache method', async () => {
+        const getter = async (value: string) => value
+        const key = 'testKey'
+        const value = 'testValue'
+        const result = await withCache(key, getter(value), { ms: 10 })
+
+        expect(result.result).toEqual(value)
+        expect(result.foundInCache).toEqual(false)
+        expectTypeOf(result.elapsed).toBeNumber
+        const result2 = await withCache(key, getter(value), { ms: 10 })
+        expect(result2.result).toEqual(value)
+        expect(result2.foundInCache).toEqual(true)
+        expectTypeOf(result2.elapsed).toBeNumber
     })
 })

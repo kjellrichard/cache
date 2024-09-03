@@ -108,5 +108,17 @@ export async function put<T>(key: string, value: T): Promise<T> {
     return value
 }
 
-
+export async function withCache<T>(cacheKey: string, fetchFunction: () => Promise<T>, maxAge: MaxAgeParam, verbose?: boolean): Promise<T> {
+    const cached = await get<T>(cacheKey, maxAge);
+    if (cached) {
+        verbose && console.log(`Found data in cache for key: ${cacheKey}`);
+        return cached;
+    } else {
+        const freshData = await fetchFunction();
+        verbose && console.log(`Fetched fresh data for key: ${cacheKey}`);
+        await put(cacheKey, freshData);
+        verbose && console.log(`Cached data for key: ${cacheKey}`);
+        return freshData;
+    }
+}
 

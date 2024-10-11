@@ -107,18 +107,23 @@ export async function put<T>(key: string, value: T): Promise<T> {
     return value
 }
 
-export async function withCache<T>(cacheKey: string, getter: Promise<T>, maxAge: MaxAgeParam): Promise<{ foundInCache: boolean, result: T, elapsed: number }> {
+export async function withCache<T>(cacheKey: string, getter: Promise<T>, maxAge: MaxAgeParam, verbose?: false): Promise<{ foundInCache: boolean, result: T, elapsed: number }> {
     const start = Date.now();
     const cached = await get<T>(cacheKey, maxAge);
+
     if (cached) {
-        return { foundInCache: true, result: cached, elapsed: Date.now() - start };
+        const elapsed = Date.now() - start
+        verbose && console.log(`Cache hit for ${cacheKey}. Took ${elapsed}ms`);
+        return { foundInCache: true, result: cached, elapsed };
     } else {
         const freshData = await getter;
         await put(cacheKey, freshData);
+        const elapsed = Date.now() - start
+        verbose && console.log(`Cache miss for ${cacheKey}. Got fresh data. Took ${elapsed}ms`);
         return {
             foundInCache: false,
             result: freshData,
-            elapsed: Date.now() - start
+            elapsed
         }
     }
 }
